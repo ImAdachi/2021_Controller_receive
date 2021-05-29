@@ -10,6 +10,7 @@ Controller::Controller(){
 void Controller::update(){
   char checksum = 0x00,receive_data[8];
   int loop_count=0;
+  gate = false;
   
     while(loop_count<10 && CONTROL.available()){    
             if(serial_recieve()==10){
@@ -19,14 +20,16 @@ void Controller::update(){
                 for(int i=0;i<7;i++)checksum ^=receive_data[i];
 
                 if(receive_data[7]==checksum){
+
+                    gate = true;
                 
                     preButtonState = ButtonState;
-                    ButtonState = (receive_data[0] & 0x3f) | ((receive_data[1] & 0x03) << 6);
+                    ButtonState = ((receive_data[0] & 0x3F) << 2) | ((receive_data[1] & 0x30) >> 4);
 
-                    RJoyX = ((receive_data[1] & 0x30) << 4) | ((receive_data[2] & 0x3C) >> 2) ;
+                    RJoyX = ((receive_data[1] & 0x0F) << 4) | ((receive_data[2] & 0x3C) >> 2) ;
                     RJoyY = ((receive_data[2] & 0x03) << 6) | ( receive_data[3] & 0x3F);
                     LJoyX = ((receive_data[4] & 0x3F) << 2) | ((receive_data[5] & 0x30) >> 4);
-                    LJoyY = ((receive_data[5] & 0x0F) << 4) | ((receive_data[6] & 0x0F) << 2);
+                    LJoyY = ((receive_data[5] & 0x0F) << 4) | (receive_data[6] & 0x0F);
                     
                     break;
                 }
@@ -38,6 +41,8 @@ void Controller::update(){
 
 void Controller::statePrint()
 {
+    Serial.print(gate);
+    Serial.print("\t");
     Serial.print(ButtonState);
     Serial.print("\t");
     Serial.print(LJoyX);

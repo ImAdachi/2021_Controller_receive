@@ -31,6 +31,7 @@ class Controller{
 
     private:
         
+        bool gate;
         unsigned int ButtonState;
         unsigned int preButtonState;
         uint8_t RJoyX, RJoyY, LJoyX, LJoyY;

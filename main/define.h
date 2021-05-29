@@ -6,3 +6,5 @@
 #define BUTTON_R1    6
 #define BUTTON_L2    7
 #define BUTTON_R2    8
+
+#define CONTROL Serial5

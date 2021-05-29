@@ -1,6 +1,6 @@
 #include "define.h"     //CONTROLのために必要
 #include "Controller.h"   
-#include "MsTimer2.h"
+#include <MsTimer2.h>
 
 bool flag_10ms =false;
 Controller ESP;  // ()を付けるとうまくいかないので注意　setup()の外で宣言
@@ -26,11 +26,24 @@ void loop(){
     ESP.statePrint(); //受信した(checksumを通った)値をprintするもの．多分使わない．
 
     delay(1);
-    if(ESP.readButton(BUTTON_MARU)==2) Serial.println("open");   //押した瞬間にprintf  BUTTON_MARUは４にしても良い（define参考に）
-    if(ESP.readButton(BUTTON_MARU)==-1) Serial.println("close"); //放した瞬間にprintf
+    if(ESP.readButton(BUTTON_UP)==2) Serial.println("open");   //押した瞬間にprintf  BUTTON_MARUは４にしても良い（define参考に）
+    if(ESP.readButton(BUTTON_UP)==-1) Serial.println("close"); //放した瞬間にprintf
     delay(1);
 
     flag_10ms=false;
   }
 
 }
+
+
+/*
+void setup(){
+  Serial.begin(115200);
+}
+
+void loop(){
+  int temp=Serial.read();
+  Serial.println(temp);
+  delay(2);
+}
+*/

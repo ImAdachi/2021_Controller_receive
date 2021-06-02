@@ -10,7 +10,7 @@ Controller::Controller(){
 void Controller::update(){
   char checksum = 0x00,receive_data[8];
   int loop_count=0;
-  gate = false;
+  comCheck = false;
   
     while(loop_count<10 && CONTROL.available()){    
             if(serial_recieve()==10){
@@ -21,7 +21,7 @@ void Controller::update(){
 
                 if(receive_data[7]==checksum){
 
-                    gate = true;
+                    comCheck = true;
                 
                     preButtonState = ButtonState;
                     ButtonState = ((receive_data[0] & 0x3F) << 2) | ((receive_data[1] & 0x30) >> 4);
@@ -41,17 +41,17 @@ void Controller::update(){
 
 void Controller::statePrint()
 {
-    Serial.print(gate);
+    Serial.print(comCheck);
     Serial.print("\t");
     Serial.print(ButtonState);
     Serial.print("\t");
-    Serial.print(LJoyX);
-    Serial.print("\t");
-    Serial.print(LJoyY);
-    Serial.print("\t");
     Serial.print(RJoyX);
     Serial.print("\t");
-    Serial.println(RJoyY);
+    Serial.print(RJoyY);
+    Serial.print("\t");
+    Serial.print(LJoyX);
+    Serial.print("\t");
+    Serial.println(LJoyY);
 }
 
 bool Controller::readButton_bin(unsigned int ButtonNum){//放しているときは０，押しているときは１
@@ -69,46 +69,46 @@ unsigned int Controller::getButtonState(){
     return ButtonState;
     }
 
-double Controller::readJoyLX()
-{
-    if(LJoyY==127)return 0;
-    return ((double)LJoyY-127.5)/127.5;
-}
-
-double Controller::readJoyLY()
-{
-    if(LJoyX==127)return 0;
-    return -((double)LJoyX-127.5)/127.5;
-}
-
 double Controller::readJoyRX()
 {   
-    if(RJoyY==127)return 0;
-    return ((double)RJoyY-127.5)/127.5;
+    if(RJoyX==127)return 0;
+    return ((double)RJoyX-127.5)/127.5;
 }
 
 double Controller::readJoyRY()
 {
-    if(RJoyX==127)return 0;
-    return -((double)RJoyX-127.5)/127.5;
+    if(RJoyY==127)return 0;
+    return ((double)RJoyY-127.5)/127.5;
 }
 
-uint8_t Controller::readJoyLXbyte()
+double Controller::readJoyLX()
 {
-    return LJoyY;
+    if(LJoyX==127)return 0;
+    return ((double)LJoyX-127.5)/127.5;
 }
-    
-uint8_t Controller::readJoyLYbyte()
+
+double Controller::readJoyLY()
 {
-    return LJoyX;
+    if(LJoyY==127)return 0;
+    return ((double)LJoyY-127.5)/127.5;
 }
     
 uint8_t Controller::readJoyRXbyte()
 {
-    return RJoyY;
+    return RJoyX;
 }
     
 uint8_t Controller::readJoyRYbyte()
 {
-    return RJoyX;
+    return RJoyY;
+}
+
+uint8_t Controller::readJoyLXbyte()
+{
+    return LJoyX;
+}
+    
+uint8_t Controller::readJoyLYbyte()
+{
+    return LJoyY;
 }

@@ -3,7 +3,7 @@
 #include <MsTimer2.h>
 
 bool flag_10ms =false;
-Controller ESP;  // ()を付けるとうまくいかないので注意　setup()の外で宣言
+Controller RECEIVE;  // ()を付けるとうまくいかないので注意　setup()の外で宣言
 
 
 void time(){
@@ -12,9 +12,8 @@ void time(){
 
 void setup() {
   Serial.begin(115200);
-  CONTROL.begin(115200);   //define.hのCONTROLをクラスの中でも使っているのでSerialを変えるときは注意が必要
-                           //CONTROLが不都合ならばクラスの中のCONTROLの部分を変える必要がある
-  //Serial.print("ready...\n");
+  CONTROL.begin(115200);   //CONTROL　は　define.h　参照
+  Serial.print("ready...\n");
   
   MsTimer2::set(10,time); 
   MsTimer2::start();
@@ -22,12 +21,12 @@ void setup() {
 
 void loop(){
   if(flag_10ms){
-    ESP.update();     //繰り返し処理の中に置いておく必要がある．これやらないとボタンの情報が更新されない
-    ESP.statePrint(); //受信した(checksumを通った)値をprintするもの．多分使わない．
+    RECEIVE.update();     //繰り返し処理の中に置いておく必要がある．これやらないとボタンの情報が更新されない
+    RECEIVE.statePrint(); //受信した(checksumを通った)値をprintするもの．多分使わない．
 
     delay(1);
-    if(ESP.readButton(BUTTON_UP)==2) Serial.println("open");   //押した瞬間にprintf  BUTTON_MARUは４にしても良い（define参考に）
-    if(ESP.readButton(BUTTON_UP)==-1) Serial.println("close"); //放した瞬間にprintf
+    if(RECEIVE.readButton(BUTTON_UP)==2) Serial.println("open");   //押した瞬間にprintf  BUTTON_UPは1にしても良い（define参考に）
+    if(RECEIVE.readButton(BUTTON_UP)==-1) Serial.println("close"); //放した瞬間にprintf
     delay(1);
 
     flag_10ms=false;
@@ -35,15 +34,3 @@ void loop(){
 
 }
 
-
-/*
-void setup(){
-  Serial.begin(115200);
-}
-
-void loop(){
-  int temp=Serial.read();
-  Serial.println(temp);
-  delay(2);
-}
-*/

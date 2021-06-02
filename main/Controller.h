@@ -14,24 +14,24 @@ class Controller{
         unsigned int getButtonState();  //分解する前のButtonStateの情報をprint 0~65535の値をとる
     
                                 //       X
-        double readJoyLX();     //       ^ 
-        double readJoyLY();     //       | 
-        double readJoyRX();     //  Y<---+----
+        double readJoyRX();     //       ^ 
         double readJoyRY();     //       | 
+        double readJoyLX();     //  Y<---+----
+        double readJoyLY();     //       | 
                                 //       | 
                                 //  1.0  ~   -1.0
 
                                 //       X
-        uint8_t readJoyLXbyte();//       ^ 
-        uint8_t readJoyLYbyte();//       |
-        uint8_t readJoyRXbyte();//  Y<---+----
-        uint8_t readJoyRYbyte();//       | 
+        uint8_t readJoyRXbyte();//       ^ 
+        uint8_t readJoyRYbyte();//       |
+        uint8_t readJoyLXbyte();//  Y<---+----
+        uint8_t readJoyLYbyte();//       | 
                                 //       |
                                 //  255  ~    0
 
     private:
         
-        bool gate;
+        bool comCheck;
         unsigned int ButtonState;
         unsigned int preButtonState;
         uint8_t RJoyX, RJoyY, LJoyX, LJoyY;

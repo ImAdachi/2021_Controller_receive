@@ -3,6 +3,13 @@
 
 #include <Arduino.h>
 
+
+struct ControllerData{
+    unsigned int ButtonState;
+    byte RJoyX, RJoyY, LJoyX, LJoyY;
+};
+
+
 class Controller{
     public:
         Controller();           
@@ -12,6 +19,7 @@ class Controller{
         int  readButton(unsigned int ButtonNum);     //上にプラスして 押した瞬間は2，放した瞬間は-1を返す．    define.hを参考に数字を入力しても良い
 
         unsigned int getButtonState();  //分解する前のButtonStateの情報をprint 0~65535の値をとる
+        ControllerData getConData();
     
                                 //       X
         double readJoyRX();     //       ^ 
@@ -22,19 +30,18 @@ class Controller{
                                 //  1.0  ~   -1.0
 
                                 //       X
-        uint8_t readJoyRXbyte();//       ^ 
-        uint8_t readJoyRYbyte();//       |
-        uint8_t readJoyLXbyte();//  Y<---+----
-        uint8_t readJoyLYbyte();//       | 
+        byte readJoyRXbyte();//       ^ 
+        byte readJoyRYbyte();//       |
+        byte readJoyLXbyte();//  Y<---+----
+        byte readJoyLYbyte();//       | 
                                 //       |
                                 //  255  ~    0
 
     private:
         
         bool comCheck;
-        unsigned int ButtonState;
-        unsigned int preButtonState;
-        uint8_t RJoyX, RJoyY, LJoyX, LJoyY;
+        ControllerData conData;
+        ControllerData pre_conData;
 
         byte serial_recieve(){
         char temp;

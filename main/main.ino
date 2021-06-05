@@ -20,7 +20,7 @@ void time(){
 void setup() {
   Serial.begin(115200);
   CONTROL.begin(115200);   //CONTROL　は　define.h　参照
-  Serial.print("ready...\n");
+  Serial.println("ready...");
   
   MsTimer2::set(10,time); 
   MsTimer2::start();
@@ -48,6 +48,8 @@ void loop(){
     Serial.print(myConData.LJoyY);
     Serial.print("  ");
     */
+    
+    
 
     delay(1);
 

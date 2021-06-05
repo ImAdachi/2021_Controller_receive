@@ -18,7 +18,7 @@ class Controller{
         bool readButton_bin(unsigned int ButtonNum); //押していない時はfalse(0),押してるときはtrue(1)を返す．　ButtonNumはデータの欲しいボタンの名前を
         int  readButton(unsigned int ButtonNum);     //上にプラスして 押した瞬間は2，放した瞬間は-1を返す．    define.hを参考に数字を入力しても良い
 
-        unsigned int getButtonState();  //分解する前のButtonStateの情報をprint 0~65535の値をとる
+        unsigned int getButtonState();  //分解する前のButtonStateの情報をprint 0~255の値をとる
         ControllerData getConData();
     
                                 //       X
@@ -30,10 +30,10 @@ class Controller{
                                 //  1.0  ~   -1.0
 
                                 //       X
-        byte readJoyRXbyte();//       ^ 
-        byte readJoyRYbyte();//       |
-        byte readJoyLXbyte();//  Y<---+----
-        byte readJoyLYbyte();//       | 
+        byte readJoyRXbyte();   //       ^ 
+        byte readJoyRYbyte();   //       |
+        byte readJoyLXbyte();   //  Y<---+----
+        byte readJoyLYbyte();   //       | 
                                 //       |
                                 //  255  ~    0
 
@@ -49,7 +49,7 @@ class Controller{
             temp =CONTROL.read();
         }
         while(temp==-1);
-        CONTROL.write(temp);
+        //CONTROL.write(temp);    //受け取ったデータをTXピンからそのまま送っている．他のマイコンにも流したいとき用．
         return temp;
         }
 };

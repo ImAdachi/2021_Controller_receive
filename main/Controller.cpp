@@ -7,7 +7,7 @@ Controller::Controller(){
     conData.RJoyX=127, conData.RJoyY=127, conData.LJoyX=127, conData.LJoyY=127;
 }
 
-void Controller::update(){
+bool Controller::update(){
   char checksum = 0x00,receive_data[8];
   int loop_count=0;
   comCheck = false;
@@ -36,7 +36,7 @@ void Controller::update(){
             }
      loop_count++;
     }
-
+return comCheck;
 }
 
 void Controller::statePrint()

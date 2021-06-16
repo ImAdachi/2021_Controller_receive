@@ -13,7 +13,7 @@ struct ControllerData{
 class Controller{
     public:
         Controller();           
-        void update();          //受信の処理＋ボタンの情報の更新．　繰り返し処理の中に置いておく必要がある．
+        bool update();          //受信の処理＋ボタンの情報の更新．　繰り返し処理の中に置いておく必要がある．ボタンの情報を受け取れている際（checksumを通ったとき）にtrue，そうでない時にfalseを返す．
         void statePrint();      //受信した情報をprint．基本受信の確認用．
         bool readButton_bin(unsigned int ButtonNum); //押していない時はfalse(0),押してるときはtrue(1)を返す．　ButtonNumはデータの欲しいボタンの名前を
         int  readButton(unsigned int ButtonNum);     //上にプラスして 押した瞬間は2，放した瞬間は-1を返す．    define.hを参考に数字を入力しても良い

@@ -1,6 +1,6 @@
 /*
  *IDE for GR 1.12
- *ボード：GR-PWACH(OpenCV)
+ *ボード：GR-PEACH(OpenCV)  /  GR-SAKURA
  */
 
 #include "define.h"     //CONTROLのために必要
@@ -28,14 +28,15 @@ void setup() {
 
 void loop(){
   if(flag_10ms){
-    RECEIVE.update();     //繰り返し処理の中に置いておく必要がある．これやらないとボタンの情報が更新されない
+    if(RECEIVE.update()){     //繰り返し処理の中に置いておく必要がある．これやらないとボタンの情報が更新されない.
     RECEIVE.statePrint(); //受信した(checksumを通った)値をprintするもの．多分使わない．
+    }
 
     delay(1);
     if(RECEIVE.readButton(BUTTON_UP)== 2) Serial.println("open");   //押した瞬間にprintf  BUTTON_UPは1にしても良い（define参考に）
     if(RECEIVE.readButton(BUTTON_UP)==-1) Serial.println("close"); //放した瞬間にprintf
     
-    /*//↓構造体で受け取れているかの確認用．上のstatePrint()と内容が被るので見にくくなる．
+    /*  //↓構造体で受け取れているかの確認用．上のstatePrint()と内容が被るので見にくくなる．
     ControllerData myConData = RECEIVE.getConData();  //構造体 ControllerData は Controller.h の中にある
     Serial.print(myConData.ButtonState);
     Serial.print(", ");
